@@ -34,4 +34,21 @@ class BenfordLawServiceTest extends TestCase
             $this->assertEquals('No', $result['complies']);
         }
     }
+
+    /** @test */
+    public function it_generates_result_table_with_a_dataset_that_doesnt_have_all_digits(): void
+    {
+        // The incomplete dataset doesn't have numbers starting in 8 or 9
+        $results = (new BenfordLawService(config('benford.distribution')))->generateResults($this->data['incomplete'], 2);
+
+        $this->assertEquals(8, $results[8]['index']);
+        $this->assertEquals(0, $results[8]['occurrences']);
+        $this->assertEquals(0, $results[8]['percentage']);
+        $this->assertEquals('No', $results[8]['complies']);
+
+        $this->assertEquals(9, $results[9]['index']);
+        $this->assertEquals(0, $results[9]['occurrences']);
+        $this->assertEquals(0, $results[9]['percentage']);
+        $this->assertEquals('No', $results[9]['complies']);
+    }
 }

@@ -37,10 +37,10 @@ class BenfordLawService
         foreach($data as $key => $value) {
             $data[$key] = [
                 'index' => $key,
-                'occurrences' => $occurrenceCount[$key],
-                'percentage' => $occurrencePercentage[$key],
+                'occurrences' => $occurrenceCount[$key] ?? 0,
+                'percentage' => $percentage = $occurrencePercentage[$key] ?? 0,
                 'reference' => $this->benfordDistribution[$key],
-                'complies' => $this->checkBenfordLawCompliance($key, $occurrencePercentage[$key], $variance) ? 'Yes' : 'No',
+                'complies' => $this->checkBenfordLawCompliance($key, $percentage, $variance) ? 'Yes' : 'No',
             ];
         }
 
